@@ -15,7 +15,7 @@ import { Icon } from 'react-native-elements';
 export default function Login() {
 
 
-	var iniciarSesion=()=>{
+	iniciarSesion=()=>{
 		const{username,password}=this.state;
 		if ( username === ''||password==''){
 			this.setState({mensajeError:'Ingrese usuario y clave!'})
@@ -39,12 +39,12 @@ export default function Login() {
             .then((response) => {
             	if("user" in responseJson){
                     console.log(responseJson)
-                    var idUserGlobal = responseJson.user.id;
-                    var nameGlobal=responseJson.user.first_name;
-                     var userNameGlobal=responseJson.user.username;
-                    var emailGlobal=responseJson.user.email;
-                    var idEquipoGlobal=responseJson.user.profile.idEquipo;
-                    var isAdminGlobal=responseJson.user.profile.isAdmin;
+                    idUserGlobal = responseJson.user.id;
+                    nameGlobal=responseJson.user.first_name;
+                    userNameGlobal=responseJson.user.username;
+                    emailGlobal=responseJson.user.email;
+                    idEquipoGlobal=responseJson.user.profile.idEquipo;
+                    isAdminGlobal=responseJson.user.profile.isAdmin;
                     //this.props.navigation.navigate('Home')         
                 }else{
                     this.setState({mensajeError:'Credenciales incorrectas!'})           
@@ -53,7 +53,7 @@ export default function Login() {
 		}
 	}
 
-	var mostrarClave=()=>{
+	mostrarClave=()=>{
         let iconName = (this.state.secureTextEntry)? "eye-off":"eye";
         this.setState({
             secureTextEntry:!this.state.secureTextEntry,
