@@ -3,7 +3,11 @@ import React, {useState} from 'react';
 import { StyleSheet, Text, View, Button, Image, FlatList, TouchableOpacity, Dimensions, TouchableWithoutFeedback, Keyboard } from 'react-native';
 import TodoItem from '../components/iconos';
 
+<<<<<<< HEAD
 export default function tipoLavado({navigation}) {
+=======
+export default function App() {
+>>>>>>> c0619f5dd10f50b27b9e0d2ba2d2cc80458072f2
   const [servicios, setServicios] = useState([
     { name: 'LAVADA COMPLETA', id: '1' },
     { name: 'LIMPIEZA DE MOTOR', id: '2' },
@@ -17,9 +21,16 @@ export default function tipoLavado({navigation}) {
     navigation.navigate("Schedule");
   }
 
+  const AppButton = ({ onPress, title }) => (
+    <TouchableOpacity onPress={onPress} style={styles.appButtonContainer}>
+      <Text style={styles.appButtonText}>{title}</Text>
+    </TouchableOpacity>
+  );
+
   return (
     <View style={styles.container}>
 
+<<<<<<< HEAD
       {/* <Image
         style={{ width: 100, height: 100 }}
         resizeMode="contain"
@@ -27,7 +38,14 @@ export default function tipoLavado({navigation}) {
       />
        */}
       <FlatList 
+=======
+      <View style={styles.bigCircle}></View>
+			<View style={styles.smallCircle}></View>
 
+      <Header/>
+>>>>>>> c0619f5dd10f50b27b9e0d2ba2d2cc80458072f2
+
+      <FlatList 
         keyExtractor={(item) => item.id} 
         data={servicios}
         renderItem={({ item }) => (
@@ -36,9 +54,14 @@ export default function tipoLavado({navigation}) {
           </TouchableOpacity>
         )}
       />
+<<<<<<< HEAD
         <View style={styles.buttonContainer}>
           <Button title='CONTINUAR'
           onPress={onChangue}/>
+=======
+        <View style={styles.screenContainer}>
+            <Button title="    CONTINUAR    " />
+>>>>>>> c0619f5dd10f50b27b9e0d2ba2d2cc80458072f2
         </View>
     </View>
   );
@@ -50,12 +73,16 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     textAlign: 'center',
     justifyContent: 'center',
+<<<<<<< HEAD
 
+=======
+>>>>>>> c0619f5dd10f50b27b9e0d2ba2d2cc80458072f2
 		position: 'relative',
 		backgroundColor: '#66C3FE',
   },
   buttonContainer: {
     marginTop: 20,
+    padding: 30,
   },
   item: {
     flex: 1,
@@ -63,8 +90,27 @@ const styles = StyleSheet.create({
     marginTop: 24,
     padding: 30,
     backgroundColor: 'red',
+    borderRadius: 30,
     textAlign: 'center',
     color: '#fff',
     fontSize: 24,
+  },
+  bigCircle: {
+		width: Dimensions.get('window').height * 0.7,
+		height: Dimensions.get('window').height * 0.7,
+		backgroundColor: '#49A5FC',
+		borderRadius: 1000,
+		position: 'absolute',
+		right: Dimensions.get('window').width * 0.25,
+		top: -50,
+	},
+	smallCircle: {
+		width: Dimensions.get('window').height * 0.4,
+		height: Dimensions.get('window').height * 0.4,
+		backgroundColor: '#55B1FC',
+		borderRadius: 1000,
+		position: 'absolute',
+		right: Dimensions.get('window').width * -0.2,
+		bottom: Dimensions.get('window').width * -0.3,
   },
 });
