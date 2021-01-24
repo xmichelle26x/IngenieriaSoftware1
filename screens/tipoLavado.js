@@ -1,10 +1,9 @@
 import { StatusBar } from 'expo-status-bar';
 import React, {useState} from 'react';
 import { StyleSheet, Text, View, Button, Image, FlatList, TouchableOpacity, Dimensions, TouchableWithoutFeedback, Keyboard } from 'react-native';
-import Header from './components/header'
-import TodoItem from './components/iconos';
+import TodoItem from '../components/iconos';
 
-export default function tipoLavado() {
+export default function tipoLavado({navigation}) {
   const [servicios, setServicios] = useState([
     { name: 'LAVADA COMPLETA', id: '1' },
     { name: 'LIMPIEZA DE MOTOR', id: '2' },
@@ -14,16 +13,19 @@ export default function tipoLavado() {
   const pressHandler = (id) => {
     console.log(id);
   }
+  const onChangue=()=>{
+    navigation.navigate("Schedule");
+  }
 
   return (
     <View style={styles.container}>
 
-      <Image
-        style={{ width: 250, height: 250 }}
+      {/* <Image
+        style={{ width: 100, height: 100 }}
         resizeMode="contain"
-        source={require('./assets/servicio 1.png')}        
+        source={require('../assets/servicio 1.png')}        
       />
-      
+       */}
       <FlatList 
 
         keyExtractor={(item) => item.id} 
@@ -35,7 +37,8 @@ export default function tipoLavado() {
         )}
       />
         <View style={styles.buttonContainer}>
-          <Button title='CONTINUAR'/>
+          <Button title='CONTINUAR'
+          onPress={onChangue}/>
         </View>
     </View>
   );
@@ -48,7 +51,6 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     justifyContent: 'center',
 
-    lex: 1,
 		position: 'relative',
 		backgroundColor: '#66C3FE',
   },

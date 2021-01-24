@@ -12,10 +12,12 @@ import {
 } from 'react-native';
 import { Icon } from 'react-native-elements';
 
-export default function Login() {
+export default function Login({navigation}) {
+	const onPagar=()=>{
+		navigation.navigate("Payment");
+	}
 
-
-	iniciarSesion=()=>{
+	var iniciarSesion=()=>{
 		const{username,password}=this.state;
 		if ( username === ''||password==''){
 			this.setState({mensajeError:'Ingrese usuario y clave!'})
@@ -39,12 +41,12 @@ export default function Login() {
             .then((response) => {
             	if("user" in responseJson){
                     console.log(responseJson)
-                    idUserGlobal = responseJson.user.id;
-                    nameGlobal=responseJson.user.first_name;
-                    userNameGlobal=responseJson.user.username;
-                    emailGlobal=responseJson.user.email;
-                    idEquipoGlobal=responseJson.user.profile.idEquipo;
-                    isAdminGlobal=responseJson.user.profile.isAdmin;
+                    var idUserGlobal = responseJson.user.id;
+                    var nameGlobal=responseJson.user.first_name;
+                    var userNameGlobal=responseJson.user.username;
+                    var emailGlobal=responseJson.user.email;
+                    var idEquipoGlobal=responseJson.user.profile.idEquipo;
+                    var isAdminGlobal=responseJson.user.profile.isAdmin;
                     //this.props.navigation.navigate('Home')         
                 }else{
                     this.setState({mensajeError:'Credenciales incorrectas!'})           
@@ -53,7 +55,7 @@ export default function Login() {
 		}
 	}
 
-	mostrarClave=()=>{
+	var mostrarClave=()=>{
         let iconName = (this.state.secureTextEntry)? "eye-off":"eye";
         this.setState({
             secureTextEntry:!this.state.secureTextEntry,
@@ -95,7 +97,8 @@ export default function Login() {
 								minLength={2}
 							/>
 						</View>
-						<TouchableOpacity style={styles.loginButton}>
+						<TouchableOpacity style={styles.loginButton}
+						onPress={onPagar}>
 							<Text style={styles.loginButtonText}>Iniciar Sesión</Text>
 						</TouchableOpacity>
 						<View>

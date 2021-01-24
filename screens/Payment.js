@@ -1,37 +1,28 @@
-import React, { Component, useState } from 'react';
-import {View, Button, Platform,Keyboard, StyleSheet, Dimensions, TouchableWithoutFeedback, TouchableOpacity, Text} from 'react-native';
-import DateTimePicker from '@react-native-community/datetimepicker';
-import { Icon } from 'react-native-elements';
-import DatePicker from 'react-native-date-picker';
+import React from 'react';
+import {
+	StyleSheet,
+	Text,
+	View,
+	TextInput,
+	Image,
+	Dimensions,
+	TouchableOpacity,
+	TouchableWithoutFeedback,
+	Keyboard,
+	ToastAndroid
+} from 'react-native';
+import { Icon, Input } from 'react-native-elements';
 
-export default function Schedule({navigation}){
-	
-	const [date, setDate] = useState(new Date(1598051730000));
-	const [mode, setMode] = useState('date');
-	const [show, setShow] = useState(false);
-	
-	const onChange = (event, selectedDate) => {
-    const currentDate = selectedDate || date;
-    setShow(Platform.OS === 'ios');
-    setDate(currentDate);
-	};
-
-	const showMode = (currentMode) => {
-    setShow(true);
-    setMode(currentMode);
-	};
-
-	const showDatepicker = () => {
-    showMode('date');
-	};
-
-	const showTimepicker = () => {
-    showMode('time');
-	};
-	const onContinuar =()=>{
-		navigation.navigate("Login");
+export default function Payment({navigation}) {
+	const ToastAction =()=>{
+		ToastAndroid.showWithGravityAndOffset(
+			"Tu turno ha sido pagado",
+			ToastAndroid.LONG,
+			ToastAndroid.BOTTOM,
+			400,
+			400
+		  );
 	}
-	
 	return(
 		<TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
 					<View style={styles.container}>
@@ -47,29 +38,30 @@ export default function Schedule({navigation}){
 										size={50}
 									/>
 								</View>
-								<Text style={styles.loginTitleText}>Seleccione un horario</Text>
+								<Text style={styles.loginTitleText}>Método de Pago</Text>
 								<View style={styles.hr}></View>
-								<View>
-									<Button onPress={showDatepicker} title="Elegir Fecha" />
-								</View>
-								<View style={styles.hr}></View>
-								<View>
-									<Button onPress={showTimepicker} title="Elegir Hora" />
-								</View>
-								{show && (
-									<DateTimePicker
-									testID="dateTimePicker"
-									value={date}
-									mode={mode}
-									is24Hour={true}
-									display="default"
-									onChange={onChange}
+								<View style={styles.inputBox}>
+									<Input
+										placeholder='Tarjeta de Débito'
+										leftIcon={
+											<Icon
+												color='#000'
+												name='credit-card'
+												type='font-awesome'
+												size={30}
+											/>
+										}
+										style={styles.input}
+										autoCapitalize={false}
+										keyboardType='numeric'
 									/>
-								)}
+								</View>
 								<TouchableOpacity style={styles.loginButton}
-								onPress={onContinuar}>
-									<Text style={styles.loginButtonText}>Continuar</Text>
+									onPress={ToastAction}
+								>
+									<Text style={styles.loginButtonText}>Pagar el turno</Text>
 								</TouchableOpacity>
+
 							</View>
 						</View>
 					</View>

@@ -7,8 +7,8 @@ export default function Home({navigation}){
     const[name,setName]=useState('No Name')
     
     const pressHandler=()=>{
-        // navigation.navigate("TipoCarro");
-        console.log("hola")
+        navigation.navigate("TipoCarro");
+        // console.log("hola")
     }
     const Separator=()=>(
         <View style={styles.separator}/>
@@ -38,7 +38,7 @@ export default function Home({navigation}){
             <Button style={styles.styleButton}
             title="Iniciar"
             textAlign="center"
-            onPress={()=>pressHandler}
+            onPress={pressHandler}
             />
           </View>
         </View>
