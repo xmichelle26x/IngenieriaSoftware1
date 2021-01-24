@@ -4,7 +4,7 @@ import { StyleSheet, Text, View, Button, Image, FlatList, TouchableOpacity, Dime
 import Header from './components/header'
 import TodoItem from './components/iconos';
 
-export default function tipoLavado() {
+export default function App() {
   const [servicios, setServicios] = useState([
     { name: 'LAVADA COMPLETA', id: '1' },
     { name: 'LIMPIEZA DE MOTOR', id: '2' },
@@ -15,17 +15,21 @@ export default function tipoLavado() {
     console.log(id);
   }
 
+  const AppButton = ({ onPress, title }) => (
+    <TouchableOpacity onPress={onPress} style={styles.appButtonContainer}>
+      <Text style={styles.appButtonText}>{title}</Text>
+    </TouchableOpacity>
+  );
+
   return (
     <View style={styles.container}>
 
-      <Image
-        style={{ width: 250, height: 250 }}
-        resizeMode="contain"
-        source={require('./assets/servicio 1.png')}        
-      />
-      
-      <FlatList 
+      <View style={styles.bigCircle}></View>
+			<View style={styles.smallCircle}></View>
 
+      <Header/>
+
+      <FlatList 
         keyExtractor={(item) => item.id} 
         data={servicios}
         renderItem={({ item }) => (
@@ -34,8 +38,8 @@ export default function tipoLavado() {
           </TouchableOpacity>
         )}
       />
-        <View style={styles.buttonContainer}>
-          <Button title='CONTINUAR'/>
+        <View style={styles.screenContainer}>
+            <Button title="    CONTINUAR    " />
         </View>
     </View>
   );
@@ -47,13 +51,12 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     textAlign: 'center',
     justifyContent: 'center',
-
-    lex: 1,
 		position: 'relative',
 		backgroundColor: '#66C3FE',
   },
   buttonContainer: {
     marginTop: 20,
+    padding: 30,
   },
   item: {
     flex: 1,
@@ -61,8 +64,27 @@ const styles = StyleSheet.create({
     marginTop: 24,
     padding: 30,
     backgroundColor: 'red',
+    borderRadius: 30,
     textAlign: 'center',
     color: '#fff',
     fontSize: 24,
+  },
+  bigCircle: {
+		width: Dimensions.get('window').height * 0.7,
+		height: Dimensions.get('window').height * 0.7,
+		backgroundColor: '#49A5FC',
+		borderRadius: 1000,
+		position: 'absolute',
+		right: Dimensions.get('window').width * 0.25,
+		top: -50,
+	},
+	smallCircle: {
+		width: Dimensions.get('window').height * 0.4,
+		height: Dimensions.get('window').height * 0.4,
+		backgroundColor: '#55B1FC',
+		borderRadius: 1000,
+		position: 'absolute',
+		right: Dimensions.get('window').width * -0.2,
+		bottom: Dimensions.get('window').width * -0.3,
   },
 });
