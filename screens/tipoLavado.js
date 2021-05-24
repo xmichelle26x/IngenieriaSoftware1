@@ -3,11 +3,7 @@ import React, {useState} from 'react';
 import { StyleSheet, Text, View, Button, Image, FlatList, TouchableOpacity, Dimensions, TouchableWithoutFeedback, Keyboard } from 'react-native';
 import TodoItem from '../components/iconos';
 
-<<<<<<< HEAD
 export default function tipoLavado({navigation}) {
-=======
-export default function App() {
->>>>>>> c0619f5dd10f50b27b9e0d2ba2d2cc80458072f2
   const [servicios, setServicios] = useState([
     { name: 'LAVADA COMPLETA', id: '1' },
     { name: 'LIMPIEZA DE MOTOR', id: '2' },
@@ -30,20 +26,13 @@ export default function App() {
   return (
     <View style={styles.container}>
 
-<<<<<<< HEAD
       {/* <Image
         style={{ width: 100, height: 100 }}
         resizeMode="contain"
         source={require('../assets/servicio 1.png')}        
       />
        */}
-      <FlatList 
-=======
-      <View style={styles.bigCircle}></View>
-			<View style={styles.smallCircle}></View>
-
-      <Header/>
->>>>>>> c0619f5dd10f50b27b9e0d2ba2d2cc80458072f2
+   
 
       <FlatList 
         keyExtractor={(item) => item.id} 
@@ -54,14 +43,9 @@ export default function App() {
           </TouchableOpacity>
         )}
       />
-<<<<<<< HEAD
         <View style={styles.buttonContainer}>
           <Button title='CONTINUAR'
           onPress={onChangue}/>
-=======
-        <View style={styles.screenContainer}>
-            <Button title="    CONTINUAR    " />
->>>>>>> c0619f5dd10f50b27b9e0d2ba2d2cc80458072f2
         </View>
     </View>
   );
@@ -73,10 +57,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     textAlign: 'center',
     justifyContent: 'center',
-<<<<<<< HEAD
-
-=======
->>>>>>> c0619f5dd10f50b27b9e0d2ba2d2cc80458072f2
 		position: 'relative',
 		backgroundColor: '#66C3FE',
   },
