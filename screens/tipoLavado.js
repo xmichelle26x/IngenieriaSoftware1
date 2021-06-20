@@ -3,7 +3,7 @@ import React, {useState} from 'react';
 import { StyleSheet, Text, View, Button, Image, FlatList, TouchableOpacity, Dimensions, TouchableWithoutFeedback, Keyboard } from 'react-native';
 import TodoItem from '../components/iconos';
 
-export default function tipoLavado({navigation}) {
+export default function TipoLavado({navigation}) {
   const [servicios, setServicios] = useState([
     { name: 'LAVADA COMPLETA', id: '1' },
     { name: 'LIMPIEZA DE MOTOR', id: '2' },
@@ -13,8 +13,8 @@ export default function tipoLavado({navigation}) {
   const pressHandler = (id) => {
     console.log(id);
   }
-  const onChangue=()=>{
-    navigation.navigate("Schedule");
+  const onChange=()=>{
+    navigation.navigate("Horario");
   }
 
   const AppButton = ({ onPress, title }) => (
@@ -45,7 +45,7 @@ export default function tipoLavado({navigation}) {
       />
         <View style={styles.buttonContainer}>
           <Button title='CONTINUAR'
-          onPress={onChangue}/>
+          onPress={onChange}/>
         </View>
     </View>
   );
@@ -54,11 +54,12 @@ export default function tipoLavado({navigation}) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: 'center',
+    // alignItems:'center',
     textAlign: 'center',
     justifyContent: 'center',
 		position: 'relative',
 		backgroundColor: '#66C3FE',
+    padding: 10
   },
   buttonContainer: {
     marginTop: 20,
@@ -67,30 +68,13 @@ const styles = StyleSheet.create({
   item: {
     flex: 1,
     marginHorizontal: 10,
-    marginTop: 24,
-    padding: 30,
+    marginTop: 30,
+    padding: 10,
     backgroundColor: 'red',
-    borderRadius: 30,
+    borderRadius: 10,
     textAlign: 'center',
     color: '#fff',
-    fontSize: 24,
+    fontSize: 20,
   },
-  bigCircle: {
-		width: Dimensions.get('window').height * 0.7,
-		height: Dimensions.get('window').height * 0.7,
-		backgroundColor: '#49A5FC',
-		borderRadius: 1000,
-		position: 'absolute',
-		right: Dimensions.get('window').width * 0.25,
-		top: -50,
-	},
-	smallCircle: {
-		width: Dimensions.get('window').height * 0.4,
-		height: Dimensions.get('window').height * 0.4,
-		backgroundColor: '#55B1FC',
-		borderRadius: 1000,
-		position: 'absolute',
-		right: Dimensions.get('window').width * -0.2,
-		bottom: Dimensions.get('window').width * -0.3,
-  },
+  
 });

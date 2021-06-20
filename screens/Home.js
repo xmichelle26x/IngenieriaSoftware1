@@ -1,88 +1,90 @@
 import React from "react";
 import { useState } from "react";
-import {StyleSheet, Text, View,SafeAreaView,Button ,Image} from "react-native";
-import { TextInput } from "react-native-gesture-handler";
+import {StyleSheet, Text, View, SafeAreaView, Dimensions, Image} from "react-native"; 
 
-export default function Home({navigation}){
-    const[name,setName]=useState('No Name')
+export default function Home({navigation}){ 
     
     const pressHandler=()=>{
-        navigation.navigate("TipoCarro");
+        navigation.navigate("Login");
         // console.log("hola")
     }
-    const Separator=()=>(
-        <View style={styles.separator}/>
-      );
+   
     return(
-        // <SafeAreaView style={styles.container}>
-        <View style={styles.container}>
+        <SafeAreaView style={styles.container}> 
+
+        <View style={styles.circuloGrande}></View>
+				  <View style={styles.circuloPequeño}></View>
+
           <View style={styles.logo}>
             <Image 
               source={require('../assets/logo.png')}
-              style={{width:150,height:140}}
+              style={{width:180,height:180}}
             />
           </View>
           <View style={styles.central}>
 
             <Text style={styles.title}>
-                App E40 Autolavado
-
+                  E40 Autolavado
             </Text>
-            <Separator />
-            <TextInput style={styles.input}
-            // coge el nombre y lo guarda arriba en la constante
-              placeholder=" Ingresa tu nombre"
-              onChangeText={(val)=>setName(val)}
+            <Text style={styles.inicio} onPress={pressHandler}>
+                  Iniciar   
+                       
+            </Text>
             
-            />
-            <Button style={styles.styleButton}
-            title="Iniciar"
-            textAlign="center"
-            onPress={pressHandler}
-            />
           </View>
-        </View>
-      // {/* </SafeAreaView> */}
+ 
+       </SafeAreaView>
     );
 
 }
 const styles = StyleSheet.create({
-    central:{
-      marginTop:40
-    },  
-    input:{
-      borderWidth:2,
-      borderColor:"#0000FF",
-      marginHorizontal:80,
-      marginVertical:20,
-      width:200,
-      height:40
-
-    },
+    
     container: {
-      flexDirection:"column",
-      justifyContent: "center",
-      
+      flex: 1,
+      justifyContent: 'center',
+      alignItems: 'center', 
+      backgroundColor:"#66C3FE"
     },
+  
     title:{
+      fontFamily: 'Roboto',
       textAlign:"center",
       paddingHorizontal:30,
-      fontSize:40,
-      fontStyle:"italic"
-    },
-    Separator:{
-      marginVertical:20,
-      borderBottomColor:'#737373'
-    },
-    styleButton:{
-      margin:10,
-    },
+      fontSize:40, 
+      color:'#003366'
+    },     
+  
     logo:{
-      marginHorizontal:110,
-      marginTop:60,
-
+      marginHorizontal:80,
+      marginBottom:20,
+    },
+    inicio:{
+      marginTop:0,
+      justifyContent: 'center',
+      alignItems: 'center', 
+      textAlign: 'center',
+      fontSize:20,
+      color:'#003366'
     },
 
+    circuloGrande: {
+      width: Dimensions.get('window').height * 0.7,
+      height: Dimensions.get('window').height * 0.7,
+      backgroundColor: '#49A5FC',
+      borderRadius: 1000,
+      position: 'absolute',
+      right: Dimensions.get('window').width * 0.25,
+      top: -50,
+    },
+    circuloPequeño: {
+      width: Dimensions.get('window').height * 0.4,
+      height: Dimensions.get('window').height * 0.4,
+      backgroundColor: '#55B1FC',
+      borderRadius: 1000,
+      position: 'absolute',
+      right: Dimensions.get('window').width * -0.2,
+      bottom: Dimensions.get('window').width * -0.3,
+    },
   
   });
   

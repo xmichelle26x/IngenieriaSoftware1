@@ -1,122 +1,163 @@
-import React from 'react';
-import {
-	StyleSheet,
-	Text,
-	View,
-	TextInput,
-	Image,
-	Dimensions,
-	TouchableOpacity,
-	TouchableWithoutFeedback,
-	Keyboard,
-} from 'react-native';
+import React, { useState } from 'react'
+import { 	StyleSheet, 
+					Text, 
+					View, 
+					TextInput, 
+					Dimensions, 
+					TouchableOpacity, 
+					TouchableWithoutFeedback, 
+					Keyboard 
+				} from 'react-native';
+import { Toast } from 'native-base';
 import { Icon } from 'react-native-elements';
+import { useNavigation } from '@react-navigation/core';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
-export default function Login({navigation}) {
-	const onPagar=()=>{
-		navigation.navigate("Payment");
-	}
 
-	var iniciarSesion=()=>{
-		const{username,password}=this.state;
-		if ( username === ''||password==''){
-			this.setState({mensajeError:'Ingrese usuario y clave!'})
-		}else{
-			var dataToSend = {username:username,password:password};
-			var formBody = [];
-			for (var key in dataToSend) {
-				var encodedKey = encodeURIComponent(key);
-            	var encodedValue = encodeURIComponent(dataToSend[key]);
-            	formBody.push(encodedKey + "=" + encodedValue);
-			}
-			formBody = formBody.join("&");
-			fetch('http://accountsolinal.pythonanywhere.com/api/login', {
-            	method: "POST",//Request Type 
-            	body: formBody,//post body 
-            	headers: {//Header Defination 
-                	'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
-            	},
-            })
-            .then((response) => response.json())
-            .then((response) => {
-            	if("user" in responseJson){
-                    console.log(responseJson)
-                    var idUserGlobal = responseJson.user.id;
-                    var nameGlobal=responseJson.user.first_name;
-                    var userNameGlobal=responseJson.user.username;
-                    var emailGlobal=responseJson.user.email;
-                    var idEquipoGlobal=responseJson.user.profile.idEquipo;
-                    var isAdminGlobal=responseJson.user.profile.isAdmin;
-                    //this.props.navigation.navigate('Home')         
-                }else{
-                    this.setState({mensajeError:'Credenciales incorrectas!'})           
-                }
-            })
+//Apollo 
+import { gql, useMutation } from '@apollo/client';
+
+const AUTENTICAR_USUARIO = gql` 
+mutation autenticarUsuario($input: AutenticarInput){
+  autenticarUsuario(input: $input){
+    token
+  }
+}
+
+`;
+
+const Login = () => {
+
+	//State del formulario
+	const [email, guardarEmail] = useState('');
+  const [contrasena, guardarContrasena] = useState('');
+	const [mensaje, guardarMensaje] = useState(null);
+
+	//React navigation
+	const navigation = useNavigation();
+
+ // Mutation de apollo
+ const [ autenticarUsuario ] = useMutation(AUTENTICAR_USUARIO);
+
+	//cuando el usuario presiona iniciar sesión 
+	const handleSubmit = async () => {
+		//validar
+		if( email === "" || contrasena === "" ){
+			//Mostrar error
+			guardarMensaje('Todos los campos son obligatorios')
+			return;
 		}
+		//contraseña al menos 6 caracteres
+		if(contrasena.length < 6){
+			guardarMensaje('La contraseña debe tener al menos 6 caracteres');
+			return;
+		} 
+	
+		try {
+			const { data } = await autenticarUsuario({
+					variables: {
+							input: {  
+									email, 
+									contrasena
+							}
+					}  
+			});
+		
+			const { token } = data.autenticarUsuario;
+			
+			//colocar token en storage 
+			await AsyncStorage.setItem('token', token);
+
+			//redireccionar a tipo de carro 
+			navigation.navigate('TipoVehiculo');
+
+
+	} catch (error) {
+			guardarMensaje(error.message.replace('GraphQL error: ', ''));
+	}
+	
 	}
 
-	var mostrarClave=()=>{
-        let iconName = (this.state.secureTextEntry)? "eye-off":"eye";
-        this.setState({
-            secureTextEntry:!this.state.secureTextEntry,
-            iconName:iconName
-        });
-    }
+		// muestra un mensaje toast
+		const mostrarAlerta = () => {
+			Toast.show({
+				text: mensaje,
+				registerButtonText: 'OK',
+				duration: 4000
+			})
+		}
+
+
+
 
 	return(
 		<TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
+		
 			<View style={styles.container}>
+
 				<View style={styles.bigCircle}></View>
 				<View style={styles.smallCircle}></View>
 				<View style={styles.centerizedView}>
 					<View style={styles.authBox}>
+
 						<View style={styles.logoBox}>
-							<Icon
-								color='#fff'
-								name='comments'
-								type='font-awesome'
-								size={50}
-							/>
+							<Icon color='#fff' 
+							name='comments' 
+							type='font-awesome' 
+							size={40}/>
 						</View>
+
 						<Text style={styles.loginTitleText}>Inicio de Sesión</Text>
+
 						<View style={styles.hr}></View>
+
 						<View style={styles.inputBox}>
-							<Text style={styles.inputLabel}>Usuario</Text>
-							<TextInput
-								style={styles.input}
-								autoCapitalize="none"
-							/>
+							<Text style={styles.inputLabel}>Correo electrónico</Text>
+							<TextInput style={styles.input}
+												 onChangeText={ texto => guardarEmail(texto) }/>
 						</View>
+
 						<View style={styles.inputBox}>
 							<Text style={styles.inputLabel}>Contraseña</Text>
 							<TextInput
 								style={styles.input}
-								autoCapitalize={false}
+								onChangeText={ texto => guardarContrasena(texto) }
 								secureTextEntry={true}
 								textContentType='password'
-								minLength={2}
-							/>
+								minLength={6}
+								/>
 						</View>
+
 						<TouchableOpacity style={styles.loginButton}
-						onPress={onPagar}>
+						onPress = { () => handleSubmit() }>
 							<Text style={styles.loginButtonText}>Iniciar Sesión</Text>
 						</TouchableOpacity>
+
 						<View>
 							<Text
-								onPress={()=>this.props.navigation.navigate('Register')}
+								onPress={()=> navigation.navigate('Register')}
 								style={styles.registerText}>
 								¿No tienes cuenta? Regístrate Ahora
 							</Text>
 						</View>
-						<TouchableOpacity>
-							<Text style={styles.forgotPasswordText}>¿Olvidó su contraseña?</Text>
-						</TouchableOpacity>
+
+						{/* <TouchableOpacity>
+							<Text style={styles.forgotPasswordText}>¿Olvidaste tu contraseña?</Text>
+						</TouchableOpacity> */}
+
 					</View>
 				</View>
+
+				{mensaje && mostrarAlerta()}
+
 			</View>
+
 		</TouchableWithoutFeedback>
 	);
 }
+export default Login;
+
+
 
 const styles = StyleSheet.create({
 	container: {
@@ -125,8 +166,8 @@ const styles = StyleSheet.create({
 		backgroundColor: '#66C3FE',
 	},
 	bigCircle: {
-		width: Dimensions.get('window').height * 0.7,
-		height: Dimensions.get('window').height * 0.7,
+		width: Dimensions.get('window').height * 0.5,
+		height: Dimensions.get('window').height * 0.5,
 		backgroundColor: '#49A5FC',
 		borderRadius: 1000,
 		position: 'absolute',
@@ -154,17 +195,14 @@ const styles = StyleSheet.create({
 		paddingHorizontal: 14,
 		paddingBottom: 30,
 		shadowColor: '#000',
-		shadowOffset: {
-			width: 0,
-			height: 2,
-		},
+		shadowOffset: { width: 0, height: 2 },
 		shadowOpacity: 0.25,
 		shadowRadius: 3.84,
 		elevation: 5,
 	},
 	logoBox: {
-		width: 100,
-		height: 100,
+		width: 80,
+		height: 80,
 		backgroundColor: '#eb4d4b',
 		borderRadius: 1000,
 		alignSelf: 'center',
@@ -174,10 +212,7 @@ const styles = StyleSheet.create({
 		top: -50,
 		marginBottom: -50,
 		shadowColor: '#000',
-		shadowOffset: {
-			width: 0,
-			height: 1,
-		},
+		shadowOffset: { width: 0, height: 1 },
 		shadowOpacity: 0.2,
 		shadowRadius: 1.41,
 		elevation: 2,
@@ -186,6 +221,8 @@ const styles = StyleSheet.create({
 		fontSize: 26,
 		fontWeight: 'bold',
 		marginTop: 10,
+		color: '#003366',
+		textAlign: 'center'
 	},
 	hr: {
 		width: '100%',
@@ -197,7 +234,7 @@ const styles = StyleSheet.create({
 		marginTop: 10,
 	},
 	inputLabel: {
-		fontSize: 18,
+		fontSize: 17,
 		marginBottom: 6,
 	},
 	input: {
@@ -208,7 +245,7 @@ const styles = StyleSheet.create({
 		paddingHorizontal: 10,
 	},
 	loginButton: {
-		backgroundColor: '#0000FF',
+		backgroundColor: '#003366',
 		marginTop: 10,
 		paddingVertical: 10,
 		borderRadius: 4,
@@ -216,17 +253,19 @@ const styles = StyleSheet.create({
 	loginButtonText: {
 		color: '#fff',
 		textAlign: 'center',
-		fontSize: 20,
+		fontSize: 18,
 		fontWeight: 'bold',
 	},
 	registerText: {
 		textAlign: 'center',
 		marginTop: 20,
-		fontSize: 16,
+		fontSize: 14,
+		color: '#003366',
 	},
 	forgotPasswordText: {
 		textAlign: 'center',
 		marginTop: 12,
-		fontSize: 16,
+		fontSize: 14,
+		color: '#003366',
 	},
 });
