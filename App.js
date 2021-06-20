@@ -44,6 +44,9 @@ import TipoVehiculo from './screens/TipoVehiculo';
 import TipoLavado from './screens/TipoLavado';
 import Horario from './screens/Horario'; 
 import Pago from './screens/Pago'; 
+import promoInput from './screens/promoInput';
+import promoMain from './screens/promoMain';
+import DatePicker from './screens/DatePicker';
 import { ApolloProvider } from '@apollo/client'
 import client from './config/apollo';
 
@@ -109,7 +112,26 @@ const App = () => {
 							title:"Pago"
 							}}/>	
 
+						<Stack.Screen
+							name="promoInput"
+							component={promoInput}
+							options={{
+							title:"Form para Promo"
+							}}/>
 
+						<Stack.Screen
+							name="promoMain"
+							component={promoMain}
+							options={{
+							title:"Lista de Promos"
+							}}/>
+
+						<Stack.Screen
+							name="DatePicker"
+							component={DatePicker}
+							options={{
+							title:"Selector de Fecha"
+							}}/>
 
 						</Stack.Navigator>
     </NavigationContainer>
