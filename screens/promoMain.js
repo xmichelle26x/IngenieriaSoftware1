@@ -1,6 +1,7 @@
 import React from 'react';
 import {
 	StyleSheet,
+	Dimensions,
 	Text,
 	View,
 	TouchableOpacity,
@@ -26,7 +27,7 @@ export default function promoMain({navigation}){
 							</Text>
 							<Text>
 								Descripción: Si traes el segundo a carro a la lavadora, pagarás el segundo carro a mitad de precio.
-							</Text
+							</Text>
 						</View>
 					</CardItem>
 					<CardItem footer bordered>
@@ -42,9 +43,9 @@ export default function promoMain({navigation}){
 						</View>
 					</CardItem>
 				</Card>
-			</View
+			</View>
 		</View>
-		</TouchableWithoutFeedback>
+		</TouchableWithfeedback>
 	);
 }
 

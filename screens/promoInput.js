@@ -34,7 +34,7 @@ export default function promoInput({navigation}){
 								<View style={styles.inputBox}>
 									<TextInput
 										placeholder='Ingrese el Nombre de la Promoción'
-										onChangeText={ } //pasar valor al input
+										// onChangeText={ } //pasar valor al input
 										style={styles.input} 
 										autoCapitalize='none'
 									/>
@@ -42,14 +42,14 @@ export default function promoInput({navigation}){
 								<View style={styles.inputBox}>
 									<TextInput
 										placeholder='Tipo de Promoción'
-										onChangeText={  } //pasar valor al input
+										// onChangeText={  } //pasar valor al input
 										style={styles.input} 
 									/>
 								</View>
 								<View style={styles.inputBox}>
 									<TextInput
 										placeholder='Descripción'
-										onChangeText={  } //pasar valor al input
+										// onChangeText={  } //pasar valor al input
 										style={styles.input}
 										autoCapitalize ='none'
 									/>

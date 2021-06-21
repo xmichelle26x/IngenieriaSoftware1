@@ -1,14 +1,15 @@
 import { useState } from 'react';
 import { Icon } from 'react-native-elements';
 import DatePicker from 'react-native-datepicker';
+import { StyleSheet } from 'react-native';
 
-const DatePicker = () => {
+const DatePickerr = () => {
 
 	const [date, setDate] = useState('');
 
 	return(
 		<View style={styles.container}>
-			<View style={styles.centerized}
+			<View style={styles.centerized}>
 				<View style={styles.authBox}>
 					<View style={styles.logoBox}>
 						<Icon color='#fff' 
@@ -25,14 +26,14 @@ const DatePicker = () => {
 						cancelBtnText='Cancelar'
 						onDateChange={(d) => setDate(d)}
 					/>
-				</View
+				</View>
 			</View>
 		</View>
 	);
 }
-export default DatePicker;
+export default DatePickerr;
 
-const styles = Stylesheet.create({
+const styles = StyleSheet.create({
 	container: {
 		flex: 1,
 		position: 'relative',

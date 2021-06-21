@@ -46,7 +46,7 @@ import Horario from './screens/Horario';
 import Pago from './screens/Pago'; 
 import promoInput from './screens/promoInput';
 import promoMain from './screens/promoMain';
-import DatePicker from './screens/DatePicker';
+import DatePicker from './screens/DatePickerr';
 import { ApolloProvider } from '@apollo/client'
 import client from './config/apollo';
 
