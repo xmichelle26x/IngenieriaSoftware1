@@ -14,7 +14,7 @@ export default function TipoLavado({navigation}) {
     console.log(id);
   }
   const onChange=()=>{
-    navigation.navigate("Horario");
+    navigation.navigate("DatosVehiculo");
   }
 
   const AppButton = ({ onPress, title }) => (

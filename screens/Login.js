@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, {useState } from 'react'
 import { 	StyleSheet, 
 					Text, 
 					View, 
@@ -69,7 +69,7 @@ const Login = () => {
 			await AsyncStorage.setItem('token', token);
 
 			//redireccionar a tipo de carro 
-			navigation.navigate('TipoVehiculo');
+			navigation.navigate('PantallaPrincipal');
 
 
 	} catch (error) {

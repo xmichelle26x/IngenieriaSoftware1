@@ -41,9 +41,12 @@ import Home from './screens/Home';
 import Login from './screens/Login';
 import Register from './screens/Register';
 import TipoVehiculo from './screens/TipoVehiculo';
+import PantallaPrincipal from './screens/PantallaPrincipal';
+import VerReservas from './screens/VerReservas';
 import TipoLavado from './screens/TipoLavado';
 import Horario from './screens/Horario'; 
 import Pago from './screens/Pago'; 
+import DatosVehiculo from './screens/DatosVehiculo';
 import { ApolloProvider } from '@apollo/client'
 import client from './config/apollo';
 
@@ -109,7 +112,28 @@ const App = () => {
 							title:"Pago"
 							}}/>	
 
+						<Stack.Screen
+							name="DatosVehiculo"
+							component={DatosVehiculo}
+							options={{
+							title:"Datos del Vehiculo"
+							}}/>
 
+						<Stack.Screen
+							name="VerReservas"
+							component={VerReservas}
+							options={{
+							title:"Ver Reservas"
+							}}/>
+							
+						<Stack.Screen
+							name="PantallaPrincipal"
+							component={PantallaPrincipal}
+							options={{
+							title:"Pantalla Principal"
+							}}/>
+
+						
 
 						</Stack.Navigator>
     </NavigationContainer>

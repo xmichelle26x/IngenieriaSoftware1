@@ -3,13 +3,31 @@ import {View, Button, Platform,Keyboard, StyleSheet, Dimensions, TouchableWithou
 import DateTimePicker from '@react-native-community/datetimepicker';
 import { Icon } from 'react-native-elements';
 import DatePicker from 'react-native-date-picker';
+import { Toast } from 'native-base';
+import { useNavigation } from '@react-navigation/core';
 
-export default function Schedule({navigation}){
+//Apollo 
+import { gql, useMutation } from '@apollo/client';
+
+const NUEVA_RESERVA = gql`
+mutation crearReserva($input: ReservaInput) {
+  crearReserva(input : $input)
+
+}
+`;
+
+const Horario = ({route}) =>{
 	
 	const [date, setDate] = useState(new Date(1598051730000));
 	const [mode, setMode] = useState('date');
 	const [show, setShow] = useState(false);
 	
+	const [mensaje, guardarMensaje] = useState(null);
+
+	//React navigation
+	const navigation = useNavigation();
+	const matricula = route.params.matricula;
+	console.log(route.params.matricula);
 	const onChange = (event, selectedDate) => {
     const currentDate = selectedDate || date;
     setShow(Platform.OS === 'ios');
@@ -28,9 +46,43 @@ export default function Schedule({navigation}){
 	const showTimepicker = () => {
     showMode('time');
 	};
-	const onContinuar =()=>{
-		navigation.navigate("Login");
+	// Mutation de apollo
+ const [ crearReserva ] = useMutation(NUEVA_RESERVA);
+
+	const handleSubmit = async () => {
+		
+		
+		// guardar el horario
+
+		try {
+			const { data } = await crearReserva({
+					variables: {
+							input: {
+									date,
+									matricula
+							}
+					}
+			});
+
+			guardarMensaje(data.crearReserva);
+			navigation.navigate('PantallaPrincipal');
+
+
+	} catch (error) {
+			guardarMensaje(error.message.replace('GraphQL error: ', ''));
 	}
+}
+	
+
+	// muestra un mensaje toast
+	const mostrarAlerta = () => {
+		Toast.show({
+			text: mensaje,
+			registerButtonText: 'OK',
+			duration: 4000
+		})
+	}
+
 	
 	return(
 		<TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
@@ -42,7 +94,7 @@ export default function Schedule({navigation}){
 								<View style={styles.logoBox}>
 									<Icon
 										color='#fff'
-										name='comments'
+										name='calendar'
 										type='font-awesome'
 										size={50}
 									/>
@@ -67,15 +119,17 @@ export default function Schedule({navigation}){
 									/>
 								)}
 								<TouchableOpacity style={styles.loginButton}
-								onPress={onContinuar}>
+								onPress = { () => handleSubmit() }>
 									<Text style={styles.loginButtonText}>Continuar</Text>
 								</TouchableOpacity>
 							</View>
 						</View>
+						{mensaje && mostrarAlerta()}
 					</View>
 		</TouchableWithoutFeedback>
 	);
 }
+export default Horario;
 
 const styles = StyleSheet.create({
 	container: {

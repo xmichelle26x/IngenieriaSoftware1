@@ -8,11 +8,19 @@ const typeDefs = gql`
     color: String
     id: ID
   }
-
-  type Query {
-    obtenerVehiculos : [Vehiculo]  
+  
+  type Reserva {
+    date: String
+    matricula: String
+    id: ID
   }
 
+
+  type Query {
+    obtenerReservas : [Reserva]
+  }
+
+  
 input UsuarioInput {
   usuario: String!
   nombre: String!
@@ -28,8 +36,13 @@ input AutenticarInput{
 
 input VehiculoInput{
   matricula: String!
-  modelo: String
-  color: String
+  modelo: String!
+  color: String!
+}
+
+input ReservaInput{
+  date: String!
+  matricula: String!
 }
 
 type Token{
@@ -44,7 +57,10 @@ type Token{
 
 
     #Vehiculos
-    nuevoVehiculo(input: VehiculoInput) : Vehiculo
+    crearVehiculo(input: VehiculoInput) : String
+
+    #Reservas
+    crearReserva(input: ReservaInput) : String
 
     #Lavados
   }

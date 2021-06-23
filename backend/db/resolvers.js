@@ -1,6 +1,7 @@
 
 const Usuario = require('../models/Usuario');
 const Vehiculo = require('../models/Vehiculo');
+const Reserva = require('../models/Reserva');
 const bcryptjs = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 require('dotenv').config({path: 'variables.env'});
@@ -15,12 +16,15 @@ const crearToken = (usuario, secreta, expiresIn) => {
 const resolvers = {
 
   Query: {
-    obtenerVehiculos: async (_, {}, ctx) => {
-      const vehiculos = await Vehiculo.find({ propietario: ctx.usuario.id });
+    
+    obtenerReservas: async (_, {}, ctx) => {
+      const reservas = await Reserva.find({ propietario: ctx.usuario.id });
       
+      return reservas;
 
     }
   },
+  
 
   Mutation: {
 
@@ -71,7 +75,7 @@ const resolvers = {
     },
 
     //VEHICULO----------------
-    nuevoVehiculo: async ( _, {input}, ctx ) => {
+    crearVehiculo: async ( _, {input}, ctx ) => {
       console.log('RESOLVER', ctx)
       try {
         const vehiculo = new Vehiculo(input);
@@ -79,8 +83,26 @@ const resolvers = {
         vehiculo.propietario = ctx.usuario.id;
 
         //almacenar en la BD
-        const resultado = await vehiculo.save();
-        return resultado;
+        vehiculo.save();
+        return 'guardado con éxito';
+        
+      } catch (error) {
+          console.log(error);
+      }
+    },
+
+    crearReserva: async (_, {input}, ctx) => {
+      console.log('RESOLVER', ctx)
+      try {
+        const reserva = new Reserva(input);
+        
+        //asociar el vehiculo y el usuario auntenticado con la reserva
+        reserva.propietario = ctx.usuario.id;
+        
+        //almacenar en la BD
+        reserva.save();
+        return 'Reserva guardada correctamente'
+        
       } catch (error) {
           console.log(error);
       }
