@@ -1,4 +1,4 @@
-const  {  gql } = require('apollo-server');
+const { gql } = require('apollo-server')
 
 const typeDefs = gql`
 
@@ -65,6 +65,6 @@ type Token{
     #Lavados
   }
 
-`;
+`
 
-module.exports = typeDefs;
+module.exports = typeDefs

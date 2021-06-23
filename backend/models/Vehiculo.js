@@ -1,23 +1,23 @@
-const mongoose = require('mongoose');
+const mongoose = require('mongoose')
 
 const VehiculoSchema = new mongoose.Schema({
-  matricula:{
+  matricula: {
     type: String,
     required: true,
     trim: true
   },
-  color:{
+  color: {
     type: String,
-    required: true, 
+    required: true
   },
-  modelo:{
+  modelo: {
     type: String,
-    required: true, 
+    required: true
   },
-  propietario:{
+  propietario: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Usuario'
-  },
+  }
 })
 
-module.exports = mongoose.model('Vehiculo', VehiculoSchema);
+module.exports = mongoose.model('Vehiculo', VehiculoSchema)

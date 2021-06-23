@@ -9,7 +9,7 @@
 // import Payment from "../screens/Payment";
 
 // const screens={
-    
+
 //     Home:{
 //         screen: Home
 //     },
@@ -31,8 +31,6 @@
 //     Payment:{
 //        screen:Payment
 //     },
-    
-    
 
 // }
 // const stackS1=createStackNavigator(screens);

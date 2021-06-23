@@ -1,19 +1,19 @@
-const mongoose = require('mongoose');
+const mongoose = require('mongoose')
 
 const ReservaSchema = new mongoose.Schema({
-  date:{
+  date: {
     type: String,
     required: true,
     trim: true
   },
-  matricula:{
+  matricula: {
     type: String,
-    trim: true 
+    trim: true
   },
-  propietario:{
+  propietario: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Usuario'
-  },
+  }
 })
 
-module.exports = mongoose.model('Reserva', ReservaSchema);
+module.exports = mongoose.model('Reserva', ReservaSchema)
