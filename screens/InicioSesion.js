@@ -9,39 +9,39 @@ import {
   TouchableWithoutFeedback,
   Keyboard
 } from 'react-native'
-import { Icon } from 'react-native-elements'
 import { Toast } from 'native-base'
+import { Icon } from 'react-native-elements'
 import { useNavigation } from '@react-navigation/core'
+import AsyncStorage from '@react-native-async-storage/async-storage'
 
 // Apollo
 import { gql, useMutation } from '@apollo/client'
 
-const NUEVA_CUENTA = gql`
-mutation crearUsuario($input: UsuarioInput) {
-  crearUsuario(input : $input)
+const AUTENTICAR_USUARIO = gql` 
+mutation autenticarUsuario($input: AutenticarInput){
+  autenticarUsuario(input: $input){
+    token
+  }
 }
 
 `
 
-const Register = () => {
-  const [usuario, guardarUsuario] = useState('')
-  const [nombre, guardarNombre] = useState('')
+const InicioSesion = () => {
+  // State del formulario
   const [email, guardarEmail] = useState('')
-  const [telefono, guardarTelefono] = useState('')
   const [contrasena, guardarContrasena] = useState('')
-
   const [mensaje, guardarMensaje] = useState(null)
 
   // React navigation
   const navigation = useNavigation()
 
   // Mutation de apollo
-  const [crearUsuario] = useMutation(NUEVA_CUENTA)
+  const [autenticarUsuario] = useMutation(AUTENTICAR_USUARIO)
 
-  // cuando se presiona registrar
+  // cuando el usuario presiona iniciar sesión
   const handleSubmit = async () => {
     // validar
-    if (usuario === '' || nombre === '' || email === '' || contrasena === '' || telefono === '') {
+    if (email === '' || contrasena === '') {
       // Mostrar error
       guardarMensaje('Todos los campos son obligatorios')
       return
@@ -52,23 +52,23 @@ const Register = () => {
       return
     }
 
-    // guardar el usuario
-
     try {
-      const { data } = await crearUsuario({
+      const { data } = await autenticarUsuario({
         variables: {
           input: {
-            usuario,
-            nombre,
             email,
-            telefono,
             contrasena
           }
         }
       })
 
-      guardarMensaje(data.crearUsuario)
-      navigation.navigate('Login')
+      const { token } = data.autenticarUsuario
+
+      // colocar token en storage
+      await AsyncStorage.setItem('token', token)
+
+      // redireccionar a tipo de carro
+      navigation.navigate('PantallaPrincipal')
     } catch (error) {
       guardarMensaje(error.message.replace('GraphQL error: ', ''))
     }
@@ -85,60 +85,40 @@ const Register = () => {
 
   return (
     <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
+
       <View style={styles.container}>
+
         <View style={styles.bigCircle} />
         <View style={styles.smallCircle} />
         <View style={styles.centerizedView}>
           <View style={styles.authBox}>
+
             <View style={styles.logoBox}>
               <Icon
                 color='#fff'
                 name='comments'
                 type='font-awesome'
-                size={50}
+                size={40}
               />
             </View>
-            <Text style={styles.loginTitleText}>Ingrese sus datos</Text>
+
+            <Text style={styles.loginTitleText}>Inicio de Sesión</Text>
+
             <View style={styles.hr} />
+
             <View style={styles.inputBox}>
+              <Text style={styles.inputLabel}>Correo electrónico</Text>
               <TextInput
-                placeholder='Nombre de usuario'
-                onChangeText={texto => guardarUsuario(texto)} // pasar valor al input
                 style={styles.input}
-                autoCapitalize='none'
+                onChangeText={texto => guardarEmail(texto)}
               />
             </View>
+
             <View style={styles.inputBox}>
+              <Text style={styles.inputLabel}>Contraseña</Text>
               <TextInput
-                placeholder='Nombres completos'
-                onChangeText={texto => guardarNombre(texto)} // pasar valor al input
                 style={styles.input}
-              />
-            </View>
-            <View style={styles.inputBox}>
-              <TextInput
-                placeholder='Email'
-                onChangeText={texto => guardarEmail(texto)} // pasar valor al input
-                style={styles.input}
-                autoCapitalize='none'
-              />
-            </View>
-            <View style={styles.inputBox}>
-              <TextInput
-                placeholder='Teléfono'
-                onChangeText={texto => guardarTelefono(texto)} // pasar valor al input
-                style={styles.input}
-                keyboardType='numeric'
-                maxLength={10}
-                autoCapitalize='none'
-              />
-            </View>
-            <View style={styles.inputBox}>
-              <TextInput
-                placeholder='Contraseña'
-                onChangeText={texto => guardarContrasena(texto)} // pasar valor al input
-                style={styles.input}
-                autoCapitalize='none'
+                onChangeText={texto => guardarContrasena(texto)}
                 secureTextEntry
                 textContentType='password'
                 minLength={6}
@@ -146,22 +126,31 @@ const Register = () => {
             </View>
 
             <TouchableOpacity
-              style={styles.registerButton}
+              style={styles.loginButton}
               onPress={() => handleSubmit()}
             >
-              <Text style={styles.registerButtonText}>Registrar</Text>
+              <Text style={styles.loginButtonText}>Iniciar Sesión</Text>
             </TouchableOpacity>
 
+            <View>
+              <Text
+                onPress={() => navigation.navigate('Registro')}
+                style={styles.registerText}
+              >
+                ¿No tienes cuenta? Regístrate Ahora
+              </Text>
+            </View>
           </View>
         </View>
 
         {mensaje && mostrarAlerta()}
 
       </View>
+
     </TouchableWithoutFeedback>
   )
 }
-export default Register
+export default InicioSesion
 
 const styles = StyleSheet.create({
   container: {
@@ -170,8 +159,8 @@ const styles = StyleSheet.create({
     backgroundColor: '#66C3FE'
   },
   bigCircle: {
-    width: Dimensions.get('window').height * 0.7,
-    height: Dimensions.get('window').height * 0.7,
+    width: Dimensions.get('window').height * 0.5,
+    height: Dimensions.get('window').height * 0.5,
     backgroundColor: '#49A5FC',
     borderRadius: 1000,
     position: 'absolute',
@@ -199,10 +188,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 14,
     paddingBottom: 30,
     shadowColor: '#000',
-    shadowOffset: {
-      width: 0,
-      height: 2
-    },
+    shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.25,
     shadowRadius: 3.84,
     elevation: 5
@@ -227,7 +213,9 @@ const styles = StyleSheet.create({
   loginTitleText: {
     fontSize: 26,
     fontWeight: 'bold',
-    marginTop: 10
+    marginTop: 10,
+    color: '#003366',
+    textAlign: 'center'
   },
   hr: {
     width: '100%',
@@ -239,7 +227,7 @@ const styles = StyleSheet.create({
     marginTop: 10
   },
   inputLabel: {
-    fontSize: 18,
+    fontSize: 17,
     marginBottom: 6
   },
   input: {
@@ -249,31 +237,28 @@ const styles = StyleSheet.create({
     borderRadius: 4,
     paddingHorizontal: 10
   },
-  registerButton: {
+  loginButton: {
     backgroundColor: '#003366',
     marginTop: 10,
     paddingVertical: 10,
     borderRadius: 4
   },
-  registerButtonText: {
+  loginButtonText: {
     color: '#fff',
     textAlign: 'center',
-    fontSize: 20,
+    fontSize: 18,
     fontWeight: 'bold'
   },
   registerText: {
     textAlign: 'center',
     marginTop: 20,
-    fontSize: 16
+    fontSize: 14,
+    color: '#003366'
   },
   forgotPasswordText: {
     textAlign: 'center',
     marginTop: 12,
-    fontSize: 16
-  },
-  scrollContainer: {
-    flex: 1,
-    paddingTop: 40,
-    paddingBottom: 10
+    fontSize: 14,
+    color: '#003366'
   }
 })

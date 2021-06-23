@@ -25,8 +25,8 @@ const VerReservas = () => {
   const { data, loading, error } = useQuery(OBTENER_RESERVAS, {
     fetchPolicy: 'no-cache'
   })
-  console.log(data)
-  console.log(loading)
+  // console.log(data)
+  // console.log(loading)
   console.log(error)
 
   if (loading) return <Text>Cargando...</Text>

@@ -4,9 +4,9 @@ import { NavigationContainer } from '@react-navigation/native'
 import { createStackNavigator } from '@react-navigation/stack'
 import { Root } from 'native-base'
 
-import Home from './screens/Home'
-import Login from './screens/Login'
-import Register from './screens/Register'
+import Inicio from './screens/Inicio'
+import InicioSesion from './screens/InicioSesion'
+import Registro from './screens/Registro'
 import TipoVehiculo from './screens/TipoVehiculo'
 import PantallaPrincipal from './screens/PantallaPrincipal'
 import VerReservas from './screens/VerReservas'
@@ -25,26 +25,26 @@ const App = () => {
       <ApolloProvider client={client}>
         <Root>
           <NavigationContainer>
-            <Stack.Navigator initialRouteName='Home'>
+            <Stack.Navigator initialRouteName='Inicio'>
               <Stack.Screen
                 name='Inicio'
-                component={Home}
+                component={Inicio}
                 options={{
                   title: 'Inicio'
                 }}
               />
 
               <Stack.Screen
-                name='Login'
-                component={Login}
+                name='InicioSesion'
+                component={InicioSesion}
                 options={{
                   title: 'Iniciar Sesión'
                 }}
               />
 
               <Stack.Screen
-                name='Register'
-                component={Register}
+                name='Registro'
+                component={Registro}
                 options={{
                   title: 'Registro'
                 }}

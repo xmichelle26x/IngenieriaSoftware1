@@ -23,7 +23,7 @@ const PantallaPrincipal = () => {
     navigation.navigate('TipoVehiculo')
   }
   const handleSubmitPromociones = async () => {
-    navigation.navigate('Login')
+    navigation.navigate('InicioSesion')
   }
   // muestra un mensaje toast
 

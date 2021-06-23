@@ -4,8 +4,7 @@ import { StyleSheet, Text, View, SafeAreaView, Dimensions, Image } from 'react-n
 
 export default function Home ({ navigation }) {
   const pressHandler = () => {
-    navigation.navigate('Login')
-    // console.log("hola")
+    navigation.navigate('InicioSesion')
   }
 
   return (
