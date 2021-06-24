@@ -1,4 +1,4 @@
-const  {  gql } = require('apollo-server');
+const { gql } = require('apollo-server');
 
 const typeDefs = gql`
 
@@ -8,11 +8,29 @@ const typeDefs = gql`
     color: String
     id: ID
   }
-
-  type Query {
-    obtenerVehiculos : [Vehiculo]  
+  
+  type Reserva {
+    date: String
+    matricula: String
+    id: ID
   }
 
+
+  type Promocion{
+    name:String
+    descripcion: String
+    descuento:String
+  
+  }
+  type Query {
+    obtenerReservas : [Reserva]
+    obtenerVehiculos : [Vehiculo]
+    obtenerPromociones: [Promocion]
+
+
+  }
+
+  
 input UsuarioInput {
   usuario: String!
   nombre: String!
@@ -28,9 +46,15 @@ input AutenticarInput{
 
 input VehiculoInput{
   matricula: String!
-  modelo: String
-  color: String
+  modelo: String!
+  color: String!
 }
+
+input ReservaInput{
+  date: String!
+  matricula: String!
+}
+
 
 type Token{
   token: String
@@ -44,11 +68,14 @@ type Token{
 
 
     #Vehiculos
-    nuevoVehiculo(input: VehiculoInput) : Vehiculo
+    crearVehiculo(input: VehiculoInput) : String
+
+    #Reservas
+    crearReserva(input: ReservaInput) : String
 
     #Lavados
   }
 
-`;
+`
 
-module.exports = typeDefs;
+module.exports = typeDefs

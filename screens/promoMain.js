@@ -1,59 +1,126 @@
-import React from 'react';
+import React, { Component } from 'react';
 import {
 	StyleSheet,
 	Dimensions,
-	Text,
+
 	View,
 	TouchableOpacity,
-} from 'react-native';
-import { Card, CardItem } from 'native-base';
-import { Icon } from 'react-native-elements';
+	TouchableWithfeedback,
+	SafeAreaView,
+	ScrollView,
+	ToastAndroid
 
-export default function promoMain({navigation}){
-	return(
-		<TouchableWithfeedback onPress={() => Keyboard.dismiss()}>
-		<View style={styles.container}>
-			<View style={styles.bigCircle}></View>
-			<View style={styles.smallCircle}></View>
-			<View style={styles.centerizedView}>
-				<Card>
-					<CardItem>
-						<Text>Nombre de la Promoción</Text>
-					</CardItem>
-					<CardItem>
-						<View>
-							<Text>
-								Días: Martes y Miércoles
-							</Text>
-							<Text>
-								Descripción: Si traes el segundo a carro a la lavadora, pagarás el segundo carro a mitad de precio.
-							</Text>
-						</View>
-					</CardItem>
-					<CardItem footer bordered>
-						<View>
-							<TouchableOpacity style={styles.editButton}
-								onPress = { () => handleSubmit() }>
-									<Text style={styles.buttonText}>Editar</Text>
+} from 'react-native';
+import { Card, CardItem, Text } from 'native-base';
+// import { Card, CardItem } from 'react-native-elements';
+
+
+const promoMain = () => {
+	const handleSubmitPromo = () => {
+
+		ToastAndroid.showWithGravityAndOffset(
+			'Promocion escodigo, ahora retrocede y crea una reserva',
+			ToastAndroid.LONG,
+			ToastAndroid.BOTTOM,
+			400,
+			400
+		)
+	}
+	return (
+
+		<ScrollView>
+			{/* <SafeAreaView style={styles.container}> */}
+
+			<View style={styles.container}>
+				<View style={styles.bigCircle}></View>
+				<View style={styles.smallCircle}></View>
+				<View style={styles.centerizedView}>
+					<View style={styles.body}>
+						<Card style={styles.tamanoCard}>
+							<TouchableOpacity>
+								<CardItem>
+									<Text>Nombre: Promocion 2 M</Text>
+								</CardItem>
+								<CardItem>
+									<View>
+										<Text>
+											Días: Martes y Miércoles
+										</Text>
+										<Text>
+											Descripción: Si traes el segundo a carro a la lavadora, pagarás el segundo carro a mitad de precio.
+										</Text>
+									</View>
+								</CardItem>
+
+								<CardItem footer bordered>
+									<View>
+										<TouchableOpacity style={styles.editButton}
+											onPress={() => handleSubmitPromo()}>
+											<Text style={styles.buttonText}>Escoger</Text>
+										</TouchableOpacity>
+
+									</View>
+								</CardItem>
 							</TouchableOpacity>
-							<TouchableOpacity style={styles.deleteButton}
-								onPress = { () => handleSubmit() }>
-									<Text style={styles.buttonText}>Eliminar</Text>
+
+						</Card>
+						<Card style={styles.tamanoCard}>
+							<TouchableOpacity>
+								<CardItem>
+									<Text>Nombre: Descuento 20% en taxis amarillos y ejecutivos</Text>
+								</CardItem>
+								<CardItem>
+									<View>
+										<Text>
+											Días: Martes, miércoles y jueves
+										</Text>
+										<Text>
+											Descripción: Precios especiales para Taxistas (Amarillos y ejecutivos) descuento del 20%
+										</Text>
+									</View>
+								</CardItem>
+
+								<CardItem footer bordered>
+									<View>
+										<TouchableOpacity style={styles.editButton}
+											onPress={() => handleSubmitPromo()}>
+											<Text style={styles.buttonText}>Escoger</Text>
+										</TouchableOpacity>
+
+									</View>
+								</CardItem>
 							</TouchableOpacity>
-						</View>
-					</CardItem>
-				</Card>
+
+						</Card>
+
+					</View>
+				</View>
 			</View>
-		</View>
-		</TouchableWithfeedback>
-	);
+		</ScrollView>
+		//</SafeAreaView>
+
+	)
+
 }
+export default promoMain
+
 
 const styles = StyleSheet.create({
+	body: {
+		alignItems: 'center',
+		// justifyContent: '',
+		height: 1000
+
+	},
 	container: {
 		flex: 1,
 		position: 'relative',
 		backgroundColor: '#66C3FE',
+	},
+	tamanoCard: {
+		width: 330,
+		height: 250,
+		marginLeft: 15
 	},
 	bigCircle: {
 		width: Dimensions.get('window').height * 0.5,
