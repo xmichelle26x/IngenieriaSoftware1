@@ -7,7 +7,7 @@ import { Platform } from 'react-native'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 
 const httpLink = createHttpLink({
-  uri: Platform.OS === 'ios' ? 'http://localhost:4000/' : 'http://192.168.100.91:4000/'
+  uri: Platform.OS === 'ios' ? 'http://localhost:4000/' : 'http://192.168.0.10:4000/'
 });
 
 const authLink = setContext(async (_, { headers }) => {
