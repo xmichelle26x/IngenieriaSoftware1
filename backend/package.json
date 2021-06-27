@@ -8,9 +8,12 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "node",
-    "dev": "nodemon .",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "react-scripts start",
+    "start": "serve -s build",
+    "build": "react-scripts build",
+    "test": "react-scripts test --env=jsdom",
+    "eject": "react-scripts eject",
+    "heroku-postbuild": "npm run build"
   },
   "keywords": [],
   "author": "",
@@ -21,9 +24,11 @@
     "dotenv": "^10.0.0",
     "graphql": "^15.5.0",
     "jsonwebtoken": "^8.5.1",
-    "mongoose": "^5.12.13"
+    "mongoose": "^5.12.13",
+    "serve": "^12.0.0"
   },
   "devDependencies": {
     "nodemon": "^2.0.7"
-  }
+  },
+  "_id": "backend@1.0.0"
 }
