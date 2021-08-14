@@ -2,8 +2,11 @@ import React, { useState } from 'react'
 import { StyleSheet, Text, View, Button, FlatList, Dimensions,TouchableWithoutFeedback,TouchableOpacity,Keyboard } from 'react-native'
 import TodoItem from '../components/iconos'
 import { Icon } from 'react-native-elements'
+import { useNavigation } from '@react-navigation/core'
 
-export default function TipoLavado ({ navigation }) {
+const TipoLavado = ({ route }) => {
+
+  const tipoVehiculo = route.params.tipoVehiculo[0]
 
   const [tiposLavado] = useState([])
 
@@ -19,6 +22,7 @@ export default function TipoLavado ({ navigation }) {
   const [Encerada, setEnc] = useState(false)
   const [flag4, setFlagEnc] = useState("")
 
+  const navigation = useNavigation()
 
   const [servicios] = useState([
     { name: 'LAVADA COMPLETA', id: '1' },
@@ -88,7 +92,7 @@ export default function TipoLavado ({ navigation }) {
     
   }
   const onChange = () => {
-    navigation.navigate('DatosVehiculo', {tiposLavado})
+    navigation.navigate('DatosVehiculo', {tiposLavado, tipoVehiculo})
   }
 
   
@@ -150,7 +154,8 @@ export default function TipoLavado ({ navigation }) {
       
     </TouchableWithoutFeedback>
   )
-}
+} 
+export default TipoLavado
 
 const styles = StyleSheet.create({
   container: {

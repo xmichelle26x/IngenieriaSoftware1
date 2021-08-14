@@ -26,6 +26,7 @@ const Horario = ({ route }) => {
   const navigation = useNavigation()
   const matricula = route.params.matricula
   const Lavados = route.params.tipoLavado
+  const tipoVehiculo = route.params.tipoVehiculo
   var tipoLavado = ""
   Lavados.forEach(element => {
     tipoLavado = tipoLavado +" | "+element
@@ -61,6 +62,7 @@ const Horario = ({ route }) => {
             date,
             matricula,
             tipoLavado,
+            tipoVehiculo,
           }
         }
       })

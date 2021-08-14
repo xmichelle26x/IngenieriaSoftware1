@@ -14,6 +14,10 @@ const ReservaSchema = new mongoose.Schema({
     type: String,
     trim: true
   },
+  tipoVehiculo: {
+    type: String,
+    trim: true
+  },
   propietario: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Usuario'

@@ -17,6 +17,7 @@ id
 date
 matricula
 tipoLavado
+tipoVehiculo
 }
 }
 `
@@ -41,7 +42,9 @@ const VerReservas = () => {
             <Text style={styles.listText}>
               Matricula: {reserva.matricula}{'\n'}
               Fecha: {reserva.date}{'\n'}
+              Vehiculo: {reserva.tipoVehiculo}{'\n'}
               Servicios: {reserva.tipoLavado}
+              
             </Text>
           </ListItem>}
       />
