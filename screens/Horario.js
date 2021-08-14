@@ -25,7 +25,11 @@ const Horario = ({ route }) => {
   // React navigation
   const navigation = useNavigation()
   const matricula = route.params.matricula
-  console.log(route.params.matricula)
+  const Lavados = route.params.tipoLavado
+  var tipoLavado = ""
+  Lavados.forEach(element => {
+    tipoLavado = tipoLavado +" | "+element
+  });
   const onChange = (event, selectedDate) => {
     const currentDate = selectedDate || date
     setShow(Platform.OS === 'ios')
@@ -55,7 +59,8 @@ const Horario = ({ route }) => {
         variables: {
           input: {
             date,
-            matricula
+            matricula,
+            tipoLavado,
           }
         }
       })

@@ -23,11 +23,11 @@ mutation crearVehiculo($input: VehiculoInput) {
 
 `
 
-const DatosVehiculo = () => {
+const DatosVehiculo = ({ route }) => {
   const [matricula, guardarMatricula] = useState('')
   const [color, guardarColor] = useState('')
   const [modelo, guardarModelo] = useState('')
-
+  const tipoLavado = route.params.tiposLavado
   const [mensaje, guardarMensaje] = useState(null)
 
   // React navigation
@@ -61,7 +61,7 @@ const DatosVehiculo = () => {
 
       guardarMensaje(data.nuevoVehiculo)
 
-      navigation.navigate('Horario', { matricula })
+      navigation.navigate('Horario', { matricula,tipoLavado })
     } catch (error) {
       guardarMensaje(error.message.replace('GraphQL error: ', ''))
     }

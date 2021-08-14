@@ -10,10 +10,15 @@ const ReservaSchema = new mongoose.Schema({
     type: String,
     trim: true
   },
+  tipoLavado: {
+    type: String,
+    trim: true
+  },
   propietario: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Usuario'
-  }
+  },
+
 })
 
 module.exports = mongoose.model('Reserva', ReservaSchema)
