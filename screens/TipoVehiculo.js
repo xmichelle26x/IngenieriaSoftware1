@@ -1,10 +1,31 @@
-import React from 'react'
+import React , { useState } from 'react'
 import { StyleSheet, Text, View, Image, Dimensions, TouchableOpacity, ScrollView } from 'react-native'
+import { useNavigation } from '@react-navigation/core'
 
-export default function TipoVehiculo ({ navigation }) {
-  const eventoImagen = () => {
-    navigation.navigate('TipoLavado')
+const TipoVehiculo = ({ route }) => {
+  
+  const [tipoVehiculo] = useState([])
+  const [flag] = useState([])
+
+  const navigation = useNavigation()
+
+  const eventoImagen = (vehiculo) => {
+    if(tipoVehiculo.length > 0){
+      tipoVehiculo.splice(0);
+      
+    }
+    tipoVehiculo.push(vehiculo);
+    flag.push(true);
+    cambio()
   }
+
+  const cambio = () =>{
+    if(flag[0] == true){
+      navigation.navigate('TipoLavado',{tipoVehiculo})
+    }
+  }
+
+
   return (
     <ScrollView>
       <View style={styles.container}>
@@ -26,7 +47,7 @@ export default function TipoVehiculo ({ navigation }) {
             </View>
 
             <View style={styles.body}>
-              <TouchableOpacity style={styles.ImagenContainer} onPress={eventoImagen}>
+              <TouchableOpacity style={styles.ImagenContainer} onPress={() => eventoImagen("Auto")}>
                 <Text
                   style={styles.texto}
                 >
@@ -43,9 +64,7 @@ export default function TipoVehiculo ({ navigation }) {
 
               </TouchableOpacity>
               <TouchableOpacity
-                style={styles.ImagenContainer}
-                onPress={eventoImagen}
-              >
+                style={styles.ImagenContainer} onPress={() => eventoImagen("Camioneta")}>
                 <Text
                   style={styles.texto}
                 >
@@ -57,7 +76,7 @@ export default function TipoVehiculo ({ navigation }) {
                 />
               </TouchableOpacity>
 
-              <TouchableOpacity style={styles.ImagenContainer} onPress={eventoImagen}>
+              <TouchableOpacity style={styles.ImagenContainer} onPress={() => eventoImagen("Furgoneta")}>
                 <Text
                   style={styles.texto}
                 >
@@ -68,7 +87,7 @@ export default function TipoVehiculo ({ navigation }) {
                   style={styles.ImagenSize}
                 />
               </TouchableOpacity>
-              <TouchableOpacity style={styles.ImagenContainer} onPress={eventoImagen}>
+              <TouchableOpacity style={styles.ImagenContainer} onPress={() => eventoImagen("Cabezal")}>
                 <Text
                   style={styles.texto}
                 >
@@ -93,6 +112,8 @@ export default function TipoVehiculo ({ navigation }) {
 
   )
 }
+export default TipoVehiculo
+
 const styles = StyleSheet.create({
   texto: {
     textAlign: 'center',

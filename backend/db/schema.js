@@ -12,6 +12,8 @@ const typeDefs = gql`
   type Reserva {
     date: String
     matricula: String
+    tipoLavado: String
+    tipoVehiculo: String
     id: ID
   }
 
@@ -53,6 +55,8 @@ input VehiculoInput{
 input ReservaInput{
   date: String!
   matricula: String!
+  tipoLavado: String!
+  tipoVehiculo: String!
 }
 
 
